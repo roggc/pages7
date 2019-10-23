@@ -1,4 +1,4 @@
-import {useEffect,useState,useCallback} from 'react'
+import {useReducer,useEffect,useCallback} from 'react'
 import {apiUrl,fetchOptions} from '../graphql/index'
 
 /*
@@ -25,9 +25,9 @@ mutation($email:String!,$key:String!,$state:String)
 `
 
 export default
-(initialState,key,user=null)=>
+(reducer,initialState,key,user=null)=>
 {
-  const [state,setState]=useState(initialState)
+  const [state,dispatch]=useReducer(reducer,initialState)
   let email=localStorage.getItem('email')
 
   const updateClient=
@@ -45,12 +45,12 @@ export default
         const json=await resp.json()
         if(json.data&& json.data.getState&& json.data.getState.res)
         {
-          setState(JSON.parse(json.data.getState.res))
+          dispatch({type:'APP_SET_STATE',val:JSON.parse(json.data.getState.res)})
           //console.log(JSON.parse(json.data.getState.res),'updated client '+key+' with '+email)
         }
         else
         {
-          setState(initialState)
+          dispatch({type:'APP_SET_STATE',val:initialState})
           //console.log(initialState,'updated client '+key+' with '+email)
         }
       }

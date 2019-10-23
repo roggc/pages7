@@ -1,4 +1,4 @@
-import React,{createContext,useState} from 'react'
+import React,{createContext,useReducer} from 'react'
 import {Div,Container,Fade,FloatL,FloatR,Container2,Abs} from './styled'
 import Header from '../header/index'
 import Footer from '../footer/index'
@@ -10,6 +10,7 @@ import Hits from '../hits/index'
 import PageCounter from '../pageCounter/index'
 import Todo from '../todo/index'
 import initialState from './state'
+import reducer from './reducer'
 import useStateWithDb from '../../hooks/useStateWithDb'
 import {UserCtx} from '../../ctx/index'
 import Signin from '../signin/index'
@@ -17,17 +18,17 @@ import Signin from '../signin/index'
 export default
 ()=>
 {
-  const [state1,setState1]=useStateWithDb(initialState,'state1')
-  const [state2,setState2]=useStateWithDb(initialState,'state2',state1.login.user)
-  const [state3,setState3]=useStateWithDb(initialState,'state3',state1.login.user)
-  const [state4,setState4]=useStateWithDb(initialState,'state4',state1.login.user)
-  const [state5,setState5]=useStateWithDb(initialState,'state5',state1.login.user)
+  const [state1,dispatch1]=useReducer(reducer,initialState,'state1')
+  const [state2,dispatch2]=useReducer(reducer,initialState,'state2',state1.login.user)
+  const [state3,dispatch3]=useReducer(reducer,initialState,'state3',state1.login.user)
+  const [state4,dispatch4]=useReducer(reducer,initialState,'state4',state1.login.user)
+  const [state5,dispatch5]=useReducer(reducer,initialState,'state5',state1.login.user)
   const el=
   <Div>
   <UserCtx.Provider value={state1.login.user}>
   <Router>
     <Container>
-      <Header state={state2} setState={setState2}/>
+      <Header state={state2} dispatch={dispatch2}/>
     </Container>
     <Container2>
         <Route render=
@@ -42,12 +43,12 @@ export default
               <Route path='/' exact render=
               {
                 ()=>
-                <Abs><Signin state={state2} setState={setState2} state1={state1} setState1={setState1}/></Abs>
+                <Abs><Signin state={state2} dispatch={dispatch2} state1={state1} dispatch1={dispatch1}/></Abs>
               }/>
               <Route path='/login' render=
               {
                 ()=>
-                <Abs><Login state={state1} setState={setState1}/></Abs>
+                <Abs><Login state={state1} dispatch={dispatch1}/></Abs>
               }/>
               <Route path='/about' render={()=><Abs><About/></Abs>}/>
               <Route path='/hits' render={()=><Abs><Hits/></Abs>}/>
@@ -58,8 +59,8 @@ export default
                   const el=
                   <Abs>
                     <PageCounter
-                    state1={state2} setState1={setState2}
-                    state2={state3} setState2={setState3}/>
+                    state1={state2} dispatch1={dispatch2}
+                    state2={state3} dispatch2={dispatch3}/>
                   </Abs>
                   return el
                 }
@@ -70,22 +71,22 @@ export default
                 ()=>
                 <Abs>
                   <PageCounter
-                  state1={state4} setState1={setState4}
-                  state2={state5} setState2={setState5}/>
+                  state1={state4} dispatch1={dispatch4}
+                  state2={state5} dispatch2={dispatch5}/>
                 </Abs>
               }/>
               <Route path='/todos1' render=
               {
                 ()=>
                 <Abs>
-                  <Todo state={state2} setState={setState2}/>
+                  <Todo state={state2} dispatch={dispatch2}/>
                 </Abs>
               }/>
               <Route path='/todos2' render=
               {
                 ()=>
                 <Abs>
-                  <Todo state={state3} setState={setState3}/>
+                  <Todo state={state3} dispatch={dispatch3}/>
                 </Abs>
               }/>
             </Switch>

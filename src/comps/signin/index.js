@@ -32,7 +32,7 @@ mutation ($email:String!,$psswrd:String!,$name:String!)
 `
 
 export default
-({state,setState,state1,setState1})=>
+({state,dispatch,state1,dispatch1})=>
 {
   const user=useContext(UserCtx)
   const signinCb=
@@ -41,102 +41,25 @@ export default
     let res
     if(res=json.signin.res)
     {
-      setState1
-      (
-        {
-          ...state1
-          ,login:
-          {
-            ...state1.login
-            ,user:
-            {
-              ...state1.login.user
-              ,name:res.name
-              ,email:res.email
-            }
-          }
-        }
-      )
+      dispatch({type:'LOGIN_SET_USER',val:{name:res.name,email:res.email}})
     }
-    setState
-    (
-      {
-        ...state
-        ,signin:
-        {
-          ...state.signin
-          ,fetching:false
-        }
-      }
-    )
+    dispatch({type:'SIGNIN_SET_FETCHING',val:false})
   }
   const signinClick=
   e=>
   {
-    setState
-    (
-      {
-        ...state
-        ,signin:
-        {
-          ...state.signin
-          ,fetching:true
-        }
-      }
-    )
+    dispatch({type:'SIGNIN_SET_FETCHING',val:true})
     graphql(signinQuery)(state.signin.queryVars)(apiUrl)(signinCb)
   }
   const nameChange=
   e=>
-  setState
-  (
-    {
-      ...state
-      ,signin:
-      {
-        ...state.signin
-        ,queryVars:
-        {
-          ...state.signin.queryVars
-          ,name:e.target.value
-        }
-      }
-    }
-  )
+  dispatch({type:'SIGNIN_SET_NAME',val:e.target.value})
   const emailChange=
   e=>
-  setState
-  (
-    {
-      ...state
-      ,signin:
-      {
-        ...state.signin
-        ,queryVars:
-        {
-          ...state.signin.queryVars
-          ,email:e.target.value
-        }
-      }
-    }
-  )
+  dispatch({type:'SIGNIN_SET_EMAIL',val:e.target.value})
   const passwordChange=
   e=>
-  setState
-  (
-    {
-      ...state
-      ,signin:
-      {
-        ...state.signin
-        ,queryVars:
-        {
-          ...state.signin.queryVars
-          ,psswrd:e.target.value
-        }
-      }
-    }
-  )
+  dispatch({type:'SIGNIN_SET_PASSWORD',val:e.target.value})
   const el=
   <Div>
   {
@@ -148,7 +71,7 @@ export default
     user?
     <div className='center'>
       <div className='square'>
-        Bienvenido {user.name}.
+        Bienvenid@ {user.name}.
       </div>
     </div>:
     <div className='center'>

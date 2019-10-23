@@ -2,7 +2,7 @@ import React from 'react'
 import {Div} from './styled'
 
 export default
-({state,setState})=>
+({state,dispatch})=>
 {
   const el=
   <Div>

@@ -2,34 +2,14 @@ import React from 'react'
 import {Div} from './styled'
 
 export default
-({state,setState})=>
+({state,dispatch})=>
 {
   const incrementCounter=
   ()=>
-  setState
-  (
-    {
-      ...state
-      ,counter:
-      {
-        ...state.counter
-        ,count:state.counter.count+1
-      }
-    }
-  )
+  dispatch({type:'COUNTER_INCREMENT'})
   const decrementCounter=
   ()=>
-  setState
-  (
-    {
-      ...state
-      ,counter:
-      {
-        ...state.counter
-        ,count:state.counter.count-1
-      }
-    }
-  )
+  dispatch({type:'COUNTER_DECREMENT'})
   const el=
   <Div>
     <div>{state.counter.count}</div>

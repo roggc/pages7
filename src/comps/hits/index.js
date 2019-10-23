@@ -1,12 +1,13 @@
-import React,{useState,useEffect,useCallback} from 'react'
+import React,{useReducer,useEffect,useCallback} from 'react'
 import {Div} from './styled'
 import Spinner from '../spinner/index'
 import initialState from './state'
+import reducer from './reducer'
 
 export default
 ()=>
 {
-  const [state,setState]=useState(initialState)
+  const [state,dispatch]=useReducer(reducer,initialState)
   const fetchData=
   useCallback
   (
@@ -17,14 +18,7 @@ export default
       .then
       (
         json=>
-        setState
-        (
-          {
-            ...state
-            ,hits:json.hits
-            ,loaded:true
-          }
-        )
+        dispatch({type:'FETCH_DATA',val:json.hits})
       )
     }
     ,[]
@@ -52,13 +46,7 @@ export default
             onMouseOver=
             {
               ()=>
-              setState
-              (
-                {
-                  ...state
-                  ,hover:item.objectID
-                }
-              )
+              dispatch({type:'SET_HOVER',val:item.objectID})
             }
             className={state.hover===item.objectID?'hover':''}
             >{item.title}</a>

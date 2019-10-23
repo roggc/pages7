@@ -6,22 +6,12 @@ import {faTrashAlt,faPlus} from '@fortawesome/free-solid-svg-icons'
 import {UserCtx} from '../../ctx/index'
 
 export default
-({state,setState})=>
+({state,dispatch})=>
 {
   const user=useContext(UserCtx)
   const addTodo=
   ()=>
-  setState
-  (
-    {
-      ...state
-      ,todo:
-      {
-        ...state.todo
-        ,showNewTodo:true
-      }
-    }
-  )
+  dispatch({type:'TODO_SHOW_NEW_TODO'})
   const confirmAdd=
   e=>
   {
@@ -29,42 +19,14 @@ export default
     if(value&& value!=='')
     {
       e.stopPropagation()
-      const todos=state.todo.todos.filter(todo=>true)
-      todos.push({text:value,done:false})
-      setState
-      (
-        {
-          ...state
-          ,todo:
-          {
-            ...state.todo
-            ,todos
-            ,showNewTodo:false
-            ,inputValue:''
-          }
-        }
-      )
-    }
-    else
-    {
-      cancelAdd()
+      dispatch({type:'TODO_ADD_TODO',val:value})
     }
   }
   const cancelAdd=
   ()=>
   {
-    setState
-    (
-      {
-        ...state
-        ,todo:
-        {
-          ...state.todo
-          ,showNewTodo:false
-          ,inputValue:''
-        }
-      }
-    )
+    dispatch({type:'TODO_NOT_SHOW_NEW_TODO'})
+    dispatch({type:'TODO_SET_INPUT_VALUE',val:''})
   }
   const allowFocus=
   e=>
@@ -75,166 +37,36 @@ export default
     if(e.key==='Enter')
     {
       confirmAdd(e)
+      cancelAdd()
     }
   }
   const setDone=
   i=>e=>
-  {
-    const todos=state.todo.todos.filter
-    (
-      todo=>true
-    )
-    todos.some
-    (
-      (todo,index)=>
-      {
-        if(index===i)
-        {
-          todo.done=true
-          return true
-        }
-      }
-    )
-    setState
-    (
-      {
-        ...state
-        ,todo:
-        {
-          ...state.todo
-          ,todos
-        }
-      }
-    )
-  }
+  dispatch({type:'TODO_SET_DONE_TODO',val:i})
   const clearTodos=
   ()=>
-  setState
-  (
-    {
-      ...state
-      ,todo:
-      {
-        ...state.todo
-        ,showClearTodos:true
-      }
-    }
-  )
+  dispatch({type:'TODO_SHOW_CLEAR_TODOS'})
   const confirmClear=
   e=>
-  {
-    e.stopPropagation()
-    setState
-    (
-      {
-        ...state,
-        todo:
-        {
-          ...state.todo,
-          todos:[],
-          showClearTodos:false
-        }
-      }
-    )
-  }
+  dispatch({type:'TODO_CLEAR_TODOS'})
   const cancelClear=
   ()=>
-  setState
-  (
-    {
-      ...state
-      ,todo:
-      {
-        ...state.todo
-        ,showClearTodos:false
-      }
-    }
-  )
+  dispatch({type:'TODO_NOT_SHOW_CLEAR_TODOS'})
   const inputChange=
   e=>
-  setState
-  (
-    {
-      ...state
-      ,todo:
-      {
-        ...state.todo
-        ,inputValue:e.target.value.toUpperCase()
-      }
-    }
-  )
+  dispatch({type:'TODO_SET_INPUT_VALUE',val:e.target.value.toUpperCase()})
   const deleteTodo=
   i=>e=>
-  {
-    const todos=state.todo.todos.filter
-    (
-      (todo,index)=>
-      {
-        if(index!==i)
-        {
-          return true
-        }
-      }
-    )
-    setState
-    (
-      {
-        ...state
-        ,todo:
-        {
-          ...state.todo
-          ,todos
-        }
-      }
-    )
-  }
+  dispatch({type:'TODO_DELETE_TODO',val:i})
   const setDoneAll=
   e=>
-  setState
-  (
-    {
-      ...state
-      ,todo:
-      {
-        ...state.todo
-        ,showSetDoneAll:true
-      }
-    }
-  )
+  dispatch({type:'TODO_SHOW_SET_DONE_ALL'})
   const cancelSetDoneAll=
   e=>
-  setState
-  (
-    {
-      ...state
-      ,todo:
-      {
-        ...state.todo
-        ,showSetDoneAll:false
-      }
-    }
-  )
+  dispatch({type:'TODO_NOT_SHOW_SET_DONE_ALL'})
   const confirmSetDoneAll=
   e=>
-  {
-    const todos=state.todo.todos.filter(todo=>true)
-    todos.forEach
-    (
-      todo=>
-      todo.done=true
-    )
-    setState
-    (
-      {
-        ...state
-        ,todo:
-        {
-          ...state.todo
-          ,todos
-        }
-      }
-    )
-  }
+  dispatch({type:'TODO_SET_DONE_ALL'})
   const inputRef=useRef(null)
   useEffect
   (

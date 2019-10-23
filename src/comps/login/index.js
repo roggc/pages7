@@ -39,151 +39,57 @@ mutation
 `
 
 export default
-({state,setState})=>
+({state,dispatch})=>
 {
   const loginCb=
   json=>
   {
     let res
-
     if(res=json.login.res)
     {
-      setState
-      (
-        {
-          ...state
-          ,login:
-          {
-            ...state.login
-            ,user:
-            {
-              ...state.login.user
-              ,email:res.email
-              ,name:res.name
-            },
-            fetching:false
-          }
-        }
-      )
+      dispatch({type:'LOGIN_SET_USER',val:{email:res.email,name:res.name}})
     }
-    else
-    {
-      setState
-      (
-        {
-          ...state
-          ,login:
-          {
-            ...state.login
-            ,fetching:false
-          }
-        }
-      )
-    }
+    dispatch({type:'LOGIN_SET_FETCHING',val:false})
   }
   const logoutCb=
   json=>
   {
     if(json.logout)
     {
-      setState
-      (
-        {
-          ...state
-          ,login:
-          {
-            ...state.login
-            ,credentials:
-            {
-              ...state.login.credentials
-              ,email:''
-              ,psswrd:''
-            }
-            ,user:undefined
-            ,fetching:false
-          }
-        }
-      )
+      dispatch({type:'LOGIN_RESET_CREDENTIALS'})
+      dispatch({type:'LOGIN_RESET_USER'})
     }
-    else
-    {
-      setState
-      (
-        {
-          ...state
-          ,login:
-          {
-            ...state.login
-            ,fetching:false
-          }
-        }
-      )
-    }
+    dispatch({type:'LOGIN_SET_FETCHING',val:false})
   }
   const loginClick=
   e=>
   {
-    setState
-    (
-      {
-        ...state
-        ,login:
-        {
-          ...state.login
-          ,fetching:true
-        }
-      }
-    )
+    dispatch({type:'LOGIN_SET_FETCHING',val:true})
     graphql(loginQuery)(state.login.credentials)(apiUrl)(loginCb)
   }
   const emailChange=
   e=>
-  setState
+  dispatch
   (
     {
-      ...state
-      ,login:
-      {
-        ...state.login
-        ,credentials:
-        {
-          ...state.login.credentials
-          ,email:e.target.value
-        }
-      }
+      type:'LOGIN_SET_EMAIL'
+      ,val:e.target.value
     }
   )
   const psswrdChange=
   e=>
-  setState
+  dispatch
   (
     {
-      ...state
-      ,login:
-      {
-        ...state.login
-        ,credentials:
-        {
-          ...state.login.credentials
-          ,psswrd:e.target.value
-        }
-      }
+      type:'LOGIN_SET_PSSWRD'
+      ,val:e.target.value
     }
   )
   const logoutClick=
   e=>
   {
-    setState
-    (
-      {
-        ...state
-        ,login:
-        {
-          ...state.login
-          ,fetching:true
-        }
-      }
-    )
+
+    dispatch({type:'LOGIN_SET_FETCHING',val:true})
     graphql(logoutQuery)({})(apiUrl)(logoutCb)
   }
   const el=
