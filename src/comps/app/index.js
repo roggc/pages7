@@ -11,18 +11,18 @@ import PageCounter from '../pageCounter/index'
 import Todo from '../todo/index'
 import initialState from './state'
 import reducer from './reducer'
-import useStateWithDb from '../../hooks/useStateWithDb'
+import useReducerWithDb from '../../hooks/useReducerWithDb'
 import {UserCtx} from '../../ctx/index'
 import Signin from '../signin/index'
 
 export default
 ()=>
 {
-  const [state1,dispatch1]=useReducer(reducer,initialState,'state1')
-  const [state2,dispatch2]=useReducer(reducer,initialState,'state2',state1.login.user)
-  const [state3,dispatch3]=useReducer(reducer,initialState,'state3',state1.login.user)
-  const [state4,dispatch4]=useReducer(reducer,initialState,'state4',state1.login.user)
-  const [state5,dispatch5]=useReducer(reducer,initialState,'state5',state1.login.user)
+  const [state1,dispatch1]=useReducerWithDb(reducer,initialState,'state1')
+  const [state2,dispatch2]=useReducerWithDb(reducer,initialState,'state2',state1.login.user)
+  const [state3,dispatch3]=useReducerWithDb(reducer,initialState,'state3',state1.login.user)
+  const [state4,dispatch4]=useReducerWithDb(reducer,initialState,'state4',state1.login.user)
+  const [state5,dispatch5]=useReducerWithDb(reducer,initialState,'state5',state1.login.user)
   const el=
   <Div>
   <UserCtx.Provider value={state1.login.user}>

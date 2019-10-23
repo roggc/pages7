@@ -69,6 +69,9 @@ export default
         ,user:undefined
       }
       return val
+    case 'SET_LOGIN':
+      val=act.val
+      return val
     default:
       return val
   }

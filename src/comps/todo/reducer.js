@@ -117,6 +117,9 @@ export default
         ,showSetDoneAll:false
       }
       return val
+    case 'SET_TODO':
+      val=act.val
+      return val
     default:
       return val
   }

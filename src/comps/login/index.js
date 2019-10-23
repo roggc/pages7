@@ -1,7 +1,9 @@
-import React from 'react'
+import React,{useReducer} from 'react'
 import {Div} from './styled'
 import graphql,{apiUrl} from '../../graphql/index'
 import Spinner from '../spinner/index'
+// import initialState from './state'
+// import reducer from './reducer'
 
 const loginQuery=
 `
@@ -41,6 +43,7 @@ mutation
 export default
 ({state,dispatch})=>
 {
+  //const [state,dispatch]=useReducer(reducer,initialState)
   const loginCb=
   json=>
   {
@@ -48,6 +51,7 @@ export default
     if(res=json.login.res)
     {
       dispatch({type:'LOGIN_SET_USER',val:{email:res.email,name:res.name}})
+      localStorage.setItem('email',res.email)
     }
     dispatch({type:'LOGIN_SET_FETCHING',val:false})
   }
@@ -58,6 +62,7 @@ export default
     {
       dispatch({type:'LOGIN_RESET_CREDENTIALS'})
       dispatch({type:'LOGIN_RESET_USER'})
+      localStorage.setItem('email','')
     }
     dispatch({type:'LOGIN_SET_FETCHING',val:false})
   }

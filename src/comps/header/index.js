@@ -13,7 +13,7 @@ export default
   useOuterClick(e=>setState({showModal:false}),ref)
   const toggleShow=
   e=>
-  setState({showModal:!stateLocal.showModal})
+  setState({showModal:!state.showModal})
   const modalClick=
   (e)=>
   e.stopPropagation()

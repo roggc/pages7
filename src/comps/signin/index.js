@@ -41,7 +41,7 @@ export default
     let res
     if(res=json.signin.res)
     {
-      dispatch({type:'LOGIN_SET_USER',val:{name:res.name,email:res.email}})
+      dispatch1({type:'LOGIN_SET_USER',val:{name:res.name,email:res.email}})
     }
     dispatch({type:'SIGNIN_SET_FETCHING',val:false})
   }

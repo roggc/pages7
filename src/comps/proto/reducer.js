@@ -10,6 +10,9 @@ export default
         ,kkk:act.val
       }
       return val
+    case 'SET_PROTO':
+      val=act.val
+      return val
     default:
       return val
   }

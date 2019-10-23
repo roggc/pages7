@@ -1,8 +1,8 @@
 import combine from '../../redux/combineReducers'
 import todo from '../todo/reducer'
-import count from '../counter/reducer'
-import login from '../login/reducer'
+import counter from '../counter/reducer'
 import signin from '../signin/reducer'
+import login from '../login/reducer'
 
 const app=
 (val={},act)=>
@@ -16,7 +16,7 @@ const app=
         ,route:act.val
       }
       return val
-    case 'APP_SET_STATE':
+    case 'SET_APP':
       val=act.val
       return val
     default:
@@ -29,9 +29,9 @@ combine
 (
   {
     todo
-    ,count
-    ,login
+    ,counter
     ,app
     ,signin
+    ,login
   }
 )

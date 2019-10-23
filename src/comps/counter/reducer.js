@@ -17,6 +17,9 @@ export default
         ,count:val.count-1
       }
       return val
+    case 'SET_COUNTER':
+      val=act.val
+      return val
     default:
       return val
   }

@@ -43,6 +43,9 @@ export default
         ,fetching:act.val
       }
       return val
+    case 'SET_SIGNIN':
+      val=act.val
+      return val
     default:
       return val
   }
