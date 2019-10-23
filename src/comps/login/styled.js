@@ -1,0 +1,69 @@
+import styled from 'styled-components'
+
+export const Div=
+styled.div
+`
+height:100%;
+.row
+{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  input
+  {
+    margin-left:10px;
+    width:178px;
+    height:24px;
+    border-radius:5px;
+    font-size:.9em;
+  }
+  margin-bottom:10px;
+}
+button
+{
+  font-size:.9em;
+  border-radius:5px;
+  cursor:pointer;
+  padding:4px;
+}
+.center
+{
+  display:flex;
+  justify-content:center;
+  height:100%;
+}
+.center2
+{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  height:100%;
+}
+.modal
+{
+  background-color:rgba(0,0,0,0.4);
+  padding-top:187px;
+  overflow:auto;
+  position:fixed;
+  top:0px;
+  left:0px;
+  height:100%;
+  width:100%;
+  z-index:1;
+  .center
+  {
+    width:31%;
+    margin:auto;
+    text-align:center;
+  }
+}
+a:hover
+{
+  text-decoration:underline;
+  cursor:pointer;
+}
+.row.last
+{
+  margin-top:23px;
+}
+`
