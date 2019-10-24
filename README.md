@@ -1,4 +1,3 @@
 # pages7
 
-useReducer, state from db 😉😃
-:smile:
+useReducer, state from db 😊
