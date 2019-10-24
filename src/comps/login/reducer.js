@@ -71,6 +71,7 @@ export default
       return val
     case 'SET_LOGIN':
       val=act.val
+      val.isUpdateClient=true
       return val
     default:
       return val

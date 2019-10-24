@@ -119,6 +119,7 @@ export default
       return val
     case 'SET_TODO':
       val=act.val
+      val.isUpdateClient=true
       return val
     default:
       return val

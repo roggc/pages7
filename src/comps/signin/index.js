@@ -1,35 +1,10 @@
 import React,{useContext} from 'react'
 import {Div} from './styled'
-import graphql,{apiUrl} from '../../graphql/index'
+import graphql from '../../graphql/index'
+import {apiUrl} from '../../graphql/urls'
 import {UserCtx} from '../../ctx/index'
 import ModalSpinner from '../modalSpinner/index'
-
-const signinQuery=
-`
-mutation ($email:String!,$psswrd:String!,$name:String!)
-{
-  signin(email:$email,psswrd:$psswrd,name:$name)
-  {
-    errors
-    {
-      name
-      message
-      function
-    }
-    error
-    {
-      name
-      message
-      function
-    }
-    res
-    {
-      name
-      email
-    }
-  }
-}
-`
+import {signinQuery} from '../../graphql/queries'
 
 export default
 ({state,dispatch,state1,dispatch1})=>
@@ -42,6 +17,7 @@ export default
     if(res=json.signin.res)
     {
       dispatch1({type:'LOGIN_SET_USER',val:{name:res.name,email:res.email}})
+      localStorage.setItem('email',res.email)
     }
     dispatch({type:'SIGNIN_SET_FETCHING',val:false})
   }

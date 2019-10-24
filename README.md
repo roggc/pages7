@@ -1,3 +1,3 @@
 # pages7
 
-useReducer, state from db
+useReducer, state from db 😉

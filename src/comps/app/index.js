@@ -11,7 +11,7 @@ import PageCounter from '../pageCounter/index'
 import Todo from '../todo/index'
 import initialState from './state'
 import reducer from './reducer'
-import useReducerWithDb from '../../hooks/useReducerWithDb'
+import useReducerWithDb from '../../hooks/useReducerWithDb/index'
 import {UserCtx} from '../../ctx/index'
 import Signin from '../signin/index'
 

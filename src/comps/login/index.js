@@ -1,49 +1,14 @@
 import React,{useReducer} from 'react'
 import {Div} from './styled'
-import graphql,{apiUrl} from '../../graphql/index'
+import graphql from '../../graphql/index'
+import {apiUrl} from '../../graphql/urls'
 import Spinner from '../spinner/index'
-// import initialState from './state'
-// import reducer from './reducer'
-
-const loginQuery=
-`
-mutation ($email:String!,$psswrd:String!)
-{
-  login(email:$email,psswrd:$psswrd)
-  {
-    errors
-    {
-      name
-      message
-      function
-    }
-    error
-    {
-      name
-      message
-      function
-    }
-    res
-    {
-      name
-      email
-      id
-    }
-  }
-}
-`
-const logoutQuery=
-`
-mutation
-{
-  logout
-}
-`
+import {loginQuery} from '../../graphql/queries'
+import {logoutQuery} from '../../graphql/queries'
 
 export default
 ({state,dispatch})=>
 {
-  //const [state,dispatch]=useReducer(reducer,initialState)
   const loginCb=
   json=>
   {

@@ -18,6 +18,7 @@ const app=
       return val
     case 'SET_APP':
       val=act.val
+      val.isUpdateClient=true
       return val
     default:
       return val
