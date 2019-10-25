@@ -13,6 +13,10 @@ export default
   {
     email=user.email
   }
+  else if(state.login.user)
+  {
+    email=state.login.user.email
+  }
 
   const updateClient=
   useCallback
@@ -27,12 +31,12 @@ export default
         {
           const stateDb=JSON.parse(json.data.getState.res)
           dispatchSet(dispatch,stateDb)
-          console.log(stateDb,'updated client '+key+' with '+email)
+          //console.log(stateDb,'updated client '+key+' with '+email)
         }
         else
         {
           dispatchSet(dispatch,initialState,true)
-          console.log(initialState,'updated client '+key+' with '+email)
+          //console.log(initialState,'updated client '+key+' with '+email)
         }
       }
     },
@@ -44,20 +48,14 @@ export default
   (
     async ()=>
     {
-      if(email)
+      if(email!==undefined&&email!==null&&email.length>0&& !state.login.fetching&& !checkIsUpdateClient(state))
       {
-        if(!state.login.fetching)
+        //console.log('email:'+email,'key:'+key,state.login.fetching,state,checkIsUpdateClient(state))
+        const resp=await fetch(apiUrl,fetchOptions(querySetState)({email,key,state:JSON.stringify(state)}))
+        const json=await resp.json()
+        if(json.data.setState)
         {
-          if(checkIsUpdateClient(state))
-          {
-            return
-          }
-          const resp=await fetch(apiUrl,fetchOptions(querySetState)({email,key,state:JSON.stringify(state)}))
-          const json=await resp.json()
-          if(json.data.setState)
-          {
-            console.log(state,'updated db '+key+' with '+email)
-          }
+          //console.log(state,'updated db '+key+' with '+email)
         }
       }
     },
